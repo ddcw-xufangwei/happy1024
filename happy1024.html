@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL心形代码艺术</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(90deg, #ff6b6b, #ffa36c, #ffde7d, #a3de83, #6a98f0, #b579f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        
+        .heart-container {
+            position: relative;
+            width: 600px;
+            height: 550px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        #sqlHeart {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.2;
+            color: #6a98f0;
+            text-align: center;
+            white-space: pre;
+            background: rgba(30, 40, 60, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(100, 150, 255, 0.2);
+            max-width: 100%;
+            overflow: auto;
+        }
+        
+        .sql-keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .sql-function {
+            color: #6a98f0;
+        }
+        
+        .sql-string {
+            color: #a3de83;
+        }
+        
+        .sql-comment {
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        .sql-table {
+            color: #ffde7d;
+        }
+        
+        .sql-number {
+            color: #b579f0;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #6a98f0, #4a78d0);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(106, 152, 240, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(106, 152, 240, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        .explanation {
+            background: rgba(40, 50, 70, 0.6);
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 20px;
+            max-width: 800px;
+            border-left: 4px solid #6a98f0;
+        }
+        
+        .explanation h3 {
+            color: #6a98f0;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .explanation p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .code-block {
+            background: #0d1525;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            border: 1px solid rgba(100, 150, 255, 0.1);
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .heart-container {
+                width: 100%;
+                height: auto;
+            }
+            
+            #sqlHeart {
+                font-size: 10px;
+                padding: 15px;
+            }
+        }
+        
+        footer {
+            margin-top: 30px;
+            color: #6c757d;
+            text-align: center;
+            font-size: 0.9rem;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SQL语句构成的心形</h1>
+            <p class="subtitle">将编程与浪漫结合，用SQL查询语句创造出独特的心形图案</p>
+        </header>
+        
+        <div class="heart-container">
+            <pre id="sqlHeart" class="pulse">
+            <!-- SQL心形将由JavaScript生成 -->
+            </pre>
+        </div>
+        
+        <div class="controls">
+            <button id="animateBtn"><i>✨</i> 动画效果</button>
+            <button id="colorBtn"><i>🎨</i> 切换颜色</button>
+            <button id="exportBtn"><i>📷</i> 保存图片</button>
+        </div>
+        
+        <div class="explanation">
+            <h3>SQL心形解析</h3>
+            <p>这个心形图案完全由SQL关键字和语句构成，每个部分都使用了不同的SQL语法元素：</p>
+            
+            <div class="code-block">
+                <span class="sql-keyword">SELECT</span> love.<span class="sql-table">heart</span><br>
+                <span class="sql-keyword">FROM</span> life.<span class="sql-table">relationships</span><br>
+                <span class="sql-keyword">WHERE</span> you.<span class="sql-table">smile</span> = <span class="sql-string">'beautiful'</span><br>
+                <span class="sql-keyword">AND</span> we.<span class="sql-table">together</span> = <span class="sql-number">1</span>;
+            </div>
+            
+            <p>心形图案使用了以下SQL元素：</p>
+            <ul>
+                <li><span class="sql-keyword">SQL关键字</span> - SELECT, FROM, WHERE, AND, JOIN等</li>
+                <li><span class="sql-function">函数</span> - COUNT(), SUM(), AVG()等</li>
+                <li><span class="sql-table">表名</span> - users, orders, products等</li>
+                <li><span class="sql-string">字符串</span> - 'Love', 'SQL', 'Code'等</li>
+                <li><span class="sql-number">数字</span> - 1, 2, 3.14等</li>
+            </ul>
+            
+            <p>这个创意展示了编程不仅是逻辑和数据的工具，也可以成为艺术的表达方式。</p>
+        </div>
+        
+        <footer>
+            <p>用代码表达爱意 | SQL心形艺术 | 分享给所有热爱编程的朋友</p>
+        </footer>
+    </div>
+
+    <script>
+        // SQL心形数据
+        const sqlHeart = [
+            "                                                                                ",
+            "                                  SELECT ❤️ FROM love;                           ",
+            "                                                                                ",
+            "             SELECT u.heart, u.soul FROM universe u WHERE u.love = TRUE;        ",
+            "                                                                                ",
+            "    SELECT SUM(love) AS eternal FROM life WHERE you IN (SELECT * FROM my_heart);",
+            "                                                                                ",
+            "SELECT * FROM world WHERE smile = 'yours' AND happiness > 100;                  ",
+            "                                                                                ",
+            "  SELECT COUNT(memories) FROM timeline WHERE we.together = TRUE;                ",
+            "                                                                                ",
+            "    SELECT AVG(happiness) FROM life WHERE you.present = TRUE;                   ",
+            "                                                                                ",
+            "      SELECT MAX(love) FROM heart WHERE destination = 'you';                    ",
+            "                                                                                ",
+            "        JOIN hearts ON you.id = me.destiny WHERE forever = 1;                   ",
+            "                                                                                ",
+            "          UPDATE soul SET status = 'completed' WHERE met_you = 1;               ",
+            "                                                                                ",
+            "            CREATE TABLE memories (id INT, moment TEXT, joy DECIMAL);           ",
+            "                                                                                ",
+            "              INSERT INTO future VALUES (1, 'together', 'always');              ",
+            "                                                                                ",
+            "                ALTER TABLE life ADD COLUMN us BOOLEAN DEFAULT TRUE;            ",
+            "                                                                                ",
+            "                  SELECT * FROM destiny WHERE path = 'together';                ",
+            "                                                                                ",
+            "                    FROM universe WHERE stars.align = TRUE;                     ",
+            "                                                                                ",
+            "                      AND time.stop = FALSE AND love.grow = TRUE;               ",
+            "                                                                                ",
+            "                        WHERE souls.connect = 1 AND hearts.beat = 1;            ",
+            "                                                                                ",
+            "                          GROUP BY destiny HAVING COUNT(us) >= 1;               ",
+            "                                                                                ",
+            "                            ORDER BY happiness DESC LIMIT 1;                    ",
+            "                                                                                ",
+            "                              VALUES ('love', 'code', 'forever');               ",
+            "                                                                                ",
+            "                                WHERE magic.happens = TRUE;                      ",
+            "                                                                                ",
+            "                                  AND dreams.come_true = 1;                     ",
+            "                                                                                ",
+            "                                    SET forever = NOW();                         ",
+            "                                                                                ",
+            "                                      FROM my_heart;                            ",
+            "                                                                                ",
+            "                                        TO yours;                               ",
+            "                                                                                ",
+            "                                          WITH love;                            ",
+            "                                                                                ",
+            "                                            AS code;                            ",
+            "                                                                                "
+        ];
+
+        // 获取显示区域
+        const sqlHeartElement = document.getElementById('sqlHeart');
+        const animateBtn = document.getElementById('animateBtn');
+        const colorBtn = document.getElementById('colorBtn');
+        const exportBtn = document.getElementById('exportBtn');
+        
+        let isAnimated = false;
+        let colorScheme = 0;
+        
+        // 高亮SQL语法
+        function highlightSQL(text) {
+            return text
+                .replace(/(SELECT|FROM|WHERE|AND|JOIN|UPDATE|CREATE|TABLE|INSERT|INTO|ALTER|ADD|COLUMN|GROUP BY|HAVING|ORDER BY|LIMIT|VALUES|SET|AS|WITH|ON|IN|TRUE|FALSE|DEFAULT|DESC|COUNT|SUM|AVG|MAX)/gi, '<span class="sql-keyword">$1</span>')
+                .replace(/(\w+)\s*\(/g, '<span class="sql-function">$1</span>(')
+                .replace(/'[^']*'/g, '<span class="sql-string">$&</span>')
+                .replace(/\b(\d+\.?\d*)\b/g, '<span class="sql-number">$1</span>')
+                .replace(/\b(users?|orders?|products?|hearts?|souls?|memories?|future|destiny|life|universe|world|timeline)\b/gi, '<span class="sql-table">$1</span>')
+                .replace(/❤️/g, '<span style="color:#ff6b6b;">❤️</span>');
+        }
+        
+        // 渲染SQL心形
+        function renderSqlHeart() {
+            let html = '';
+            sqlHeart.forEach(line => {
+                html += highlightSQL(line) + '\n';
+            });
+            sqlHeartElement.innerHTML = html;
+        }
+        
+        // 初始渲染
+        renderSqlHeart();
+        
+        // 动画效果
+        animateBtn.addEventListener('click', () => {
+            if (isAnimated) {
+                sqlHeartElement.classList.remove('floating');
+                animateBtn.innerHTML = '<i>✨</i> 动画效果';
+            } else {
+                sqlHeartElement.classList.add('floating');
+                animateBtn.innerHTML = '<i>⏹️</i> 停止动画';
+            }
+            isAnimated = !isAnimated;
+        });
+        
+        // 切换颜色方案
+        const colorSchemes = [
+            { keyword: '#ff6b6b', function: '#6a98f0', string: '#a3de83', table: '#ffde7d', number: '#b579f0' },
+            { keyword: '#ffde7d', function: '#a3de83', string: '#6a98f0', table: '#ff6b6b', number: '#b579f0' },
+            { keyword: '#b579f0', function: '#ff6b6b', string: '#ffde7d', table: '#6a98f0', number: '#a3de83' }
+        ];
+        
+        colorBtn.addEventListener('click', () => {
+            colorScheme = (colorScheme + 1) % colorSchemes.length;
+            const colors = colorSchemes[colorScheme];
+            
+            document.documentElement.style.setProperty('--sql-keyword-color', colors.keyword);
+            document.documentElement.style.setProperty('--sql-function-color', colors.function);
+            document.documentElement.style.setProperty('--sql-string-color', colors.string);
+            document.documentElement.style.setProperty('--sql-table-color', colors.table);
+            document.documentElement.style.setProperty('--sql-number-color', colors.number);
+            
+            renderSqlHeart();
+        });
+        
+        // 保存为图片
+        exportBtn.addEventListener('click', () => {
+            alert('功能提示：在实际应用中，这里可以使用html2canvas库将SQL心形转换为图片。\n\n现在您可以手动截图保存这个精美的SQL心形！');
+        });
+        
+        // 添加CSS变量用于动态颜色
+        const style = document.createElement('style');
+        style.textContent = `
+            :root {
+                --sql-keyword-color: #ff6b6b;
+                --sql-function-color: #6a98f0;
+                --sql-string-color: #a3de83;
+                --sql-table-color: #ffde7d;
+                --sql-number-color: #b579f0;
+            }
+            
+            .sql-keyword {
+                color: var(--sql-keyword-color) !important;
+            }
+            
+            .sql-function {
+                color: var(--sql-function-color) !important;
+            }
+            
+            .sql-string {
+                color: var(--sql-string-color) !important;
+            }
+            
+            .sql-table {
+                color: var(--sql-table-color) !important;
+            }
+            
+            .sql-number {
+                color: var(--sql-number-color) !important;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
